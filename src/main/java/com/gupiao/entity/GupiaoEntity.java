@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class GupiaoEntity {
     private String name;
@@ -17,7 +16,7 @@ public class GupiaoEntity {
     private BigDecimal floorPrice;
     private Long tradeNumber;
     private BigDecimal tradeAmount;
-    private Date tradeDate;
+    private String tradeDate;
 
     public GupiaoEntity(){}
 
@@ -27,14 +26,25 @@ public class GupiaoEntity {
         String[] gupiao = detail.split(",");
         this.name = gupiao[0];
         this.code = code;
-        this.openedPrice = new BigDecimal(gupiao[1]).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.yesterdayPrice = new BigDecimal(gupiao[2]).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.currentPrice = new BigDecimal(gupiao[3]).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.topPrice = new BigDecimal(gupiao[4]).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.floorPrice = new BigDecimal(gupiao[5]).setScale(2, BigDecimal.ROUND_HALF_UP);
+        this.openedPrice = new BigDecimal(gupiao[1]).setScale(2);
+        this.yesterdayPrice = new BigDecimal(gupiao[2]).setScale(2);
+        this.currentPrice = new BigDecimal(gupiao[3]).setScale(2);
+        this.topPrice = new BigDecimal(gupiao[4]).setScale(2);
+        this.floorPrice = new BigDecimal(gupiao[5]).setScale(2);
         this.tradeNumber = Long.parseLong(gupiao[8]);
-        this.tradeAmount = new BigDecimal(gupiao[9]).setScale(2, BigDecimal.ROUND_HALF_UP);
-        this.tradeDate = new SimpleDateFormat("yyyy-MM-dd").parse(gupiao[30]);
+        this.tradeAmount = new BigDecimal(gupiao[9]).setScale(2);
+        this.tradeDate = gupiao[30];
+    }
+
+    public GupiaoEntity(String code, String[] gupiao){
+        this.tradeDate = gupiao[0];
+        this.openedPrice = new BigDecimal(gupiao[1]).setScale(2);
+        this.currentPrice = new BigDecimal(gupiao[2]).setScale(2);
+        this.floorPrice = new BigDecimal(gupiao[5]).setScale(2);
+        this.topPrice = new BigDecimal(gupiao[6]).setScale(2);
+        this.tradeNumber = Long.parseLong(gupiao[7]);
+        this.tradeAmount = new BigDecimal(gupiao[8]).setScale(2);
+        this.code = code;
     }
 
     @Override
@@ -124,11 +134,11 @@ public class GupiaoEntity {
         this.tradeAmount = tradeAmount;
     }
 
-    public Date getTradeDate() {
+    public String getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(Date tradeDate) {
+    public void setTradeDate(String tradeDate) {
         this.tradeDate = tradeDate;
     }
 }
