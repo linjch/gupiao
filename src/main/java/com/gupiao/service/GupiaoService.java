@@ -27,7 +27,7 @@ public class GupiaoService {
     }
 
     public List<GupiaoEntity> getGupiaoInfoBySohuApi(String code, String startDate, String endDate){
-        SohuGupiaoReturn sohuGupiaoReturn = sohuApiHttpclient.getGupiaoDetail(code, startDate, endDate);
+        SohuGupiaoReturn sohuGupiaoReturn = sohuApiHttpclient.getGupiaoList(code, startDate, endDate);
         List<GupiaoEntity> results = new ArrayList<GupiaoEntity>();
         if(null == sohuGupiaoReturn)  return results;
         List<String[]> gupiaoList = sohuGupiaoReturn.getHq();
